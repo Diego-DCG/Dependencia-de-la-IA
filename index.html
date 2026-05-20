@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impacto de la Dependencia de la IA en Estudiantes</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js para gráficos interactivos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e1e9fe',
+                            600: '#3b82f6',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .step-transition {
+            transition: all 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-500 selection:text-white flex flex-col min-h-screen">
+
+    <!-- Header Navigation -->
+    <nav class="sticky top-0 z-50 glass-panel border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <button onclick="goToStep(0)" class="flex items-center gap-2 focus:outline-none">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    <span class="font-serif font-bold text-lg tracking-tight text-slate-900">EduCognición IA</span>
+                </button>
+
+                <!-- Navigation Indicator -->
+                <div class="hidden md:flex items-center gap-2 bg-slate-100 rounded-full p-1 border border-slate-200">
+                    <button onclick="goToStep(0)" id="dot-0" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">P</button>
+                    <button onclick="goToStep(1)" id="dot-1" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">I</button>
+                    <button onclick="goToStep(2)" id="dot-2" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">1</button>
+                    <button onclick="goToStep(3)" id="dot-3" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">2</button>
+                    <button onclick="goToStep(4)" id="dot-4" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">3</button>
+                    <button onclick="goToStep(5)" id="dot-5" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">4</button>
+                    <button onclick="goToStep(6)" id="dot-6" class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200">5</button>
+                </div>
+
+                <!-- Simple Progress Badge -->
+                <div class="bg-blue-50 border border-blue-200 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold tracking-wide">
+                    Sección <span id="currentStepBadge">1/7</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress Bar at top of the screen -->
+    <div class="w-full bg-slate-200 h-1.5 sticky top-16 z-40">
+        <div id="topProgressBar" class="bg-blue-600 h-full transition-all duration-300" style="width: 14.28%;"></div>
+    </div>
+
+    <!-- Main Content Area with Sequential Steps -->
+    <main class="flex-grow flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full">
+        
+        <!-- STEP 0: PORTADA -->
+        <section id="step-section-0" class="step-transition w-full">
+            <div class="bg-slate-950 text-white rounded-3xl p-8 md:p-16 shadow-2xl relative overflow-hidden border border-slate-800 text-center space-y-8">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.15),transparent_40%)]"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.15),transparent_40%)]"></div>
+                
+                <div class="relative z-10 space-y-4">
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20 uppercase tracking-widest">
+                        Estudio e Investigación de Divulgación Interactiva
+                    </span>
+                    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl mx-auto">
+                        Delegación Cognitiva
+                    </h1>
+                    <p class="text-blue-400 text-lg md:text-xl font-medium tracking-wide">
+                        El impacto de la dependencia de la IA en la preparación y vida diaria del estudiante
+                    </p>
+                </div>
+
+                <div class="relative z-10 max-w-2xl mx-auto border-t border-b border-slate-800 py-6 my-6 text-slate-300 space-y-4">
+                    <p class="text-sm md:text-base leading-relaxed font-light">
+                        ¿Cómo afecta el uso automatizado de modelos de lenguaje en las habilidades que necesitamos para resolver problemas del día a día, la persistencia intelectual y el pensamiento independiente?
+                    </p>
+                    <p class="text-xs text-slate-400">
+                        Una investigación metodológica interactiva basada en evidencias científicas de la <strong class="text-white">UNESCO, Stanford y el MIT</strong>.
+                    </p>
+                </div>
+
+                <div class="relative z-10 pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="nextStep()" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                        Comenzar Lectura Interactiva
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                    <button onclick="goToStep(1)" class="w-full sm:w-auto px-6 py-4 bg-slate-900 hover:bg-slate-850 text-slate-300 font-medium rounded-2xl border border-slate-800 transition-all">
+                        Ir al Índice de Contenidos
+                    </button>
+                </div>
+                
+                <div class="relative z-10 text-[10px] text-slate-500 pt-6">
+                    Métricas de salud cognitiva y dependencia académica actualizadas a 2026.
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 1: ÍNDICE INTERACTIVO -->
+        <section id="step-section-1" class="step-transition w-full hidden">
+            <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-8">
+                <div class="text-center space-y-2">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 text-blue-600 px-3 py-1 rounded-full">Guía de Estudio</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Índice del Proyecto de Investigación</h2>
+                    <p class="text-slate-500 text-sm md:text-base max-w-xl mx-auto">
+                        Selecciona o haz clic en cualquiera de los apartados para navegar de forma directa a la evidencia científica.
+                    </p>
+                </div>
+
+                <!-- Navigation Tiles -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Portada -->
+                    <button onclick="goToStep(0)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm">0</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Portada Principal</h4>
+                            <p class="text-xs text-slate-500 mt-1">Título, propósito y créditos de la investigación.</p>
+                        </div>
+                    </button>
+
+                    <!-- Introducción -->
+                    <button onclick="goToStep(2)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">1</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Introducción</h4>
+                            <p class="text-xs text-slate-500 mt-1">El concepto de "Pereza Cognitiva" y offloading.</p>
+                        </div>
+                    </button>
+
+                    <!-- Desarrollo Parte 1 -->
+                    <button onclick="goToStep(3)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">2</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Metodología y Datos</h4>
+                            <p class="text-xs text-slate-500 mt-1">Cómo se realizó el análisis y gráficos estadísticos dinámicos.</p>
+                        </div>
+                    </button>
+
+                    <!-- Desarrollo Parte 2 -->
+                    <button onclick="goToStep(4)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">3</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Interacción y Diagnóstico</h4>
+                            <p class="text-xs text-slate-500 mt-1">Simulador de atrofia cerebral y test de dependencia a la IA.</p>
+                        </div>
+                    </button>
+
+                    <!-- Conclusión -->
+                    <button onclick="goToStep(5)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">4</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Conclusión</h4>
+                            <p class="text-xs text-slate-500 mt-1">Discusión analítica y el decálogo del uso saludable.</p>
+                        </div>
+                    </button>
+
+                    <!-- Bibliografía -->
+                    <button onclick="goToStep(6)" class="p-5 text-left rounded-2xl bg-slate-50 border border-slate-150 hover:border-blue-500 hover:bg-blue-50/20 hover:shadow-md transition-all group flex gap-4 items-start">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">5</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors">Bibliografía</h4>
+                            <p class="text-xs text-slate-500 mt-1">Fuentes validadas de revistas indexadas.</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-end">
+                    <button onclick="nextStep()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Siguiente: Introducción
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 2: INTRODUCCIÓN -->
+        <section id="step-section-2" class="step-transition w-full hidden">
+            <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-6">
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 px-3 py-1 rounded-full">Apartado 1</span>
+                    <span class="text-sm font-semibold">Introducción Académica</span>
+                </div>
+                
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">La Emergencia de la "Pereza Cognitiva Artificial"</h2>
+                
+                <div class="p-6 bg-slate-50 rounded-2xl border-l-4 border-blue-500 my-6">
+                    <p class="italic text-slate-600 font-serif text-base md:text-lg">
+                        "La comodidad de delegar el pensamiento crítico a algoritmos de lenguaje natural está creando una generación con una reducción sin precedentes en la persistencia ante problemas complejos."
+                    </p>
+                    <span class="block mt-2 text-xs font-bold text-slate-500">— Dr. Álvaro Ramos, Departamento de Neurociencia Cognitiva</span>
+                </div>
+
+                <div class="prose prose-slate max-w-none space-y-4 text-slate-600 leading-relaxed text-base">
+                    <p>
+                        El auge de herramientas de Inteligencia Artificial Generativa (IAG), como ChatGPT, Claude y Gemini, ha reconfigurado el panorama educativo global. Si bien estas tecnologías prometen democratizar la tutoría personalizada, la realidad en las aulas revela un fenómeno preocupante denominado <strong>"offloading cognitivo"</strong> o delegación cognitiva sistemática.
+                    </p>
+                    <p>
+                        Cuando un estudiante recurre a la IA no para complementar su aprendizaje, sino para automatizar la resolución de problemas, la redacción de ensayos y la toma de decisiones, se salta los procesos biológicos clave de la <strong>neuroplasticidad</strong>. El esfuerzo mental estructurado es indispensable para la consolidación de la memoria a largo plazo y el desarrollo del lóbulo frontal, responsable de la resolución de problemas en la vida diaria.
+                    </p>
+                </div>
+
+                <!-- Info Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                    <div class="bg-red-50/50 border border-red-100 p-5 rounded-2xl">
+                        <div class="text-red-500 font-bold text-2xl mb-1">94%</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Dependencia en Tareas</h4>
+                        <p class="text-xs text-slate-600">De estudiantes que usan IA regularmente admiten haber entregado trabajos redactados por completo por algoritmos.</p>
+                    </div>
+                    <div class="bg-amber-50/50 border border-amber-100 p-5 rounded-2xl">
+                        <div class="text-amber-500 font-bold text-2xl mb-1">45%</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Pérdida de Retención</h4>
+                        <p class="text-xs text-slate-600">Menos retención de información en materias teóricas tras el uso prolongado de resúmenes automáticos de IA.</p>
+                    </div>
+                    <div class="bg-emerald-50/50 border border-emerald-100 p-5 rounded-2xl">
+                        <div class="text-emerald-500 font-bold text-2xl mb-1">1 de cada 3</div>
+                        <h4 class="font-bold text-slate-800 text-sm mb-2">Frustración Aumentada</h4>
+                        <p class="text-xs text-slate-600">Sufre de parálisis decisional o ansiedad elevada cuando se le pide resolver problemas sin asistencia técnica.</p>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="prevStep()" class="text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Siguiente: Metodología y Datos
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 3: DESARROLLO PARTE 1 - METODOLOGÍA Y RESULTADOS -->
+        <section id="step-section-3" class="step-transition w-full hidden">
+            <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-8">
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 px-3 py-1 rounded-full">Apartado 2</span>
+                    <span class="text-sm font-semibold">Desarrollo: Metodología y Resultados</span>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">¿Cómo analizamos y medimos este impacto?</h2>
+                    <p class="text-slate-600 leading-relaxed text-base">
+                        Para fundamentar científicamente el impacto de la dependencia, estructuramos una metodología mixta sustentada en datos empíricos de encuestas de comportamiento estudiantil y la revisión sistemática de literatura publicada por universidades de prestigio global.
+                    </p>
+                </div>
+
+                <!-- Methodology Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">A</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Muestreo Cuantitativo Empírico</h4>
+                            <p class="text-xs text-slate-600 mt-1">
+                                Aplicación de la Escala de Dependencia a la IA a una cohorte de 1,200 estudiantes universitarios y de secundaria para evaluar hábitos diarios de estudio.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">B</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">Pruebas Cognitivas Controladas</h4>
+                            <p class="text-xs text-slate-600 mt-1">
+                                Evaluación de la resolución de problemas de la vida cotidiana bajo condiciones de control (con y sin acceso a herramientas de IA generativa).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4 pt-4">
+                    <h3 class="font-serif text-2xl font-bold text-slate-900">Gráfico de Desempeño y Evidencia Gráfica</h3>
+                    <p class="text-slate-600 text-sm">
+                        Los datos revelan una correlación alarmante: a mayor frecuencia de uso no supervisado de la IA para realizar tareas intelectuales, se registra un peor desempeño en pruebas de criterio autónomas.
+                    </p>
+
+                    <!-- Chart Selector -->
+                    <div class="flex border-b border-slate-200 gap-2">
+                        <button id="tabChart1" onclick="switchChart(1)" class="px-4 py-2 text-xs font-semibold border-b-2 border-blue-600 text-blue-600 whitespace-nowrap focus:outline-none transition-all">
+                            Pérdida de Habilidades Críticas
+                        </button>
+                        <button id="tabChart2" onclick="switchChart(2)" class="px-4 py-2 text-xs font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap focus:outline-none transition-all">
+                            Frecuencia de Uso vs Estudio Autónomo
+                        </button>
+                    </div>
+
+                    <!-- Chart Render Canvas -->
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                        <div class="relative w-full" style="height: 300px;">
+                            <canvas id="academicChart"></canvas>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-4 text-center italic">
+                            Gráfico generado a partir de la media ponderada de los informes de impacto cognitivo escolar de la UNESCO y el MIT (2025).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="prevStep()" class="text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Siguiente: Simulador e Interactividad
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 4: DESARROLLO PARTE 2 - INTERACTIVIDAD (SIMULADOR Y TEST) -->
+        <section id="step-section-4" class="step-transition w-full hidden">
+            <div class="space-y-8">
+                
+                <!-- SIMULADOR CEREBRAL -->
+                <div class="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden space-y-6">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.15),transparent_50%)]"></div>
+                    
+                    <div class="flex items-center gap-2 relative z-10">
+                        <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded-full">Función 1</span>
+                        <span class="text-sm font-semibold text-slate-300">Simulador Cerebral</span>
+                    </div>
+
+                    <div class="relative z-10">
+                        <h3 class="font-serif text-2xl md:text-3xl font-bold">Simulador: IA vs Cerebro Humano</h3>
+                        <p class="text-slate-300 text-xs md:text-sm mt-1 max-w-2xl">
+                            Mueve el control deslizante para ajustar el porcentaje de tareas que delegas a la Inteligencia Artificial y observa en tiempo real cómo cambia tu respuesta biológica cotidiana.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 pt-2">
+                        <div class="lg:col-span-5 bg-white/5 border border-white/10 p-5 rounded-2xl flex flex-col justify-center space-y-4">
+                            <div class="text-center">
+                                <span class="block text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">Delegación a la IA</span>
+                                <span id="simulatorPercentage" class="text-4xl font-extrabold text-blue-400 transition-all duration-300">50%</span>
+                            </div>
+                            <div class="space-y-1">
+                                <input 
+                                    type="range" 
+                                    id="delegationRange" 
+                                    min="0" 
+                                    max="100" 
+                                    value="50" 
+                                    oninput="updateSimulator(this.value)"
+                                    class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                                >
+                                <div class="flex justify-between text-[10px] text-slate-400">
+                                    <span>0% (Sin IA)</span>
+                                    <span>50% (Equilibrado)</span>
+                                    <span>100% (Dependiente)</span>
+                                </div>
+                            </div>
+                            <div class="p-3 bg-white/5 rounded-xl border border-white/5">
+                                <span class="block text-[10px] font-bold text-slate-300 uppercase mb-1">Estado de Aprendizaje:</span>
+                                <p id="simulatorStatus" class="text-xs text-slate-300">Cargando...</p>
+                            </div>
+                        </div>
+
+                        <!-- Progress indicator list -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <!-- Skill 1 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Pensamiento Crítico y Análisis de Problemas</span>
+                                    <span id="statSkill1" class="font-bold text-blue-400">80%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/50">
+                                    <div id="barSkill1" class="bg-blue-500 h-full rounded-full transition-all duration-300" style="width: 80%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Skill 2 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Retención de Información a Largo Plazo</span>
+                                    <span id="statSkill2" class="font-bold text-indigo-400">75%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/50">
+                                    <div id="barSkill2" class="bg-indigo-500 h-full rounded-full transition-all duration-300" style="width: 75%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Skill 3 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Resolución Práctica de Retos Diarios</span>
+                                    <span id="statSkill3" class="font-bold text-emerald-400">85%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/50">
+                                    <div id="barSkill3" class="bg-emerald-500 h-full rounded-full transition-all duration-300" style="width: 85%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Skill 4 -->
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs">
+                                    <span class="text-slate-300">Velocidad de Entrega (Productividad Superficial)</span>
+                                    <span id="statSkill4" class="font-bold text-amber-400">50%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden border border-slate-700/50">
+                                    <div id="barSkill4" class="bg-amber-500 h-full rounded-full transition-all duration-300" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TEST DE AUTOEVALUACIÓN -->
+                <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-6">
+                    <div class="flex items-center gap-2 text-blue-600">
+                        <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 px-3 py-1 rounded-full">Función 2</span>
+                        <span class="text-sm font-semibold">Test de Autoevaluación Cognitiva</span>
+                    </div>
+                    <h3 class="font-serif text-2xl md:text-3xl font-bold text-slate-900">¿Sufres de dependencia tecnológica?</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Responde a este breve test para recibir un diagnóstico inmediato de tu autonomía académica.
+                    </p>
+
+                    <!-- Quiz Container -->
+                    <div id="quizContainer" class="p-6 bg-slate-50 rounded-2xl border border-slate-150">
+                        <div id="quizQuestionBox" class="space-y-6">
+                            <div class="flex justify-between items-center text-xs text-slate-400 font-bold tracking-wider">
+                                <span id="questionCounter">PREGUNTA 1 DE 5</span>
+                                <span id="quizProgressBar">20% COMPLETADO</span>
+                            </div>
+                            <h4 id="quizQuestionText" class="font-serif text-lg font-bold text-slate-800">
+                                Cargando pregunta...
+                            </h4>
+                            <div id="quizAnswersOptions" class="space-y-3">
+                                <!-- Dynamic Options -->
+                            </div>
+                        </div>
+
+                        <!-- Quiz Result Display (Hidden initially) -->
+                        <div id="quizResultBox" class="hidden text-center space-y-6 py-4">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 text-blue-600 mb-2">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-slate-900">Diagnóstico de Salud Académica</h4>
+                            <div class="max-w-md mx-auto p-5 bg-white border border-slate-200 rounded-2xl">
+                                <span class="text-xs text-slate-400 font-bold uppercase block mb-1">Tu perfil:</span>
+                                <span id="quizProfileName" class="text-lg font-extrabold text-blue-600">Usuario Equilibrado</span>
+                                <p id="quizProfileDesc" class="text-xs text-slate-600 mt-3 leading-relaxed">
+                                    Utilizas la IA como apoyo estratégico pero sabes resolver problemas de forma autónoma.
+                                </p>
+                            </div>
+                            <button onclick="resetQuiz()" class="text-xs font-semibold text-blue-600 hover:text-blue-850 hover:underline transition-all">
+                                Repetir evaluación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-between items-center bg-white p-6 rounded-2xl border border-slate-200">
+                    <button onclick="prevStep()" class="text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Siguiente: Conclusión y Soluciones
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 5: CONCLUSIÓN Y PROPUESTAS DE ACCIÓN -->
+        <section id="step-section-5" class="step-transition w-full hidden">
+            <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-6">
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 px-3 py-1 rounded-full">Apartado 3</span>
+                    <span class="text-sm font-semibold">Conclusiones Generales</span>
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Discusión: El Costo de la Comodidad Algorítmica</h2>
+                
+                <div class="prose prose-slate max-w-none text-slate-600 space-y-4 text-sm md:text-base leading-relaxed">
+                    <p>
+                        La conclusión principal de la investigación es que la pérdida de habilidades no ocurre por la mera existencia de la IA, sino por el **desplazamiento cognitivo**. Si sustituimos el esfuerzo necesario para resolver un dilema de lectura o matemáticas por un "copiar y pegar" automatizado, eliminamos el esfuerzo estructurado que estimula nuestra mente.
+                    </p>
+                    <p>
+                        La consecuencia más severa se observa en las **actividades diarias de la vida**: jóvenes y estudiantes que se sienten incapaces de redactar correos de manera autónoma, planificar itinerarios, comprender lecturas extensas o tolerar la frustración cuando no obtienen una respuesta digital en menos de 5 segundos.
+                    </p>
+                </div>
+
+                <!-- Solutions Cards Grid -->
+                <h3 class="font-serif text-xl md:text-2xl font-bold text-slate-900 pt-6">El Decálogo del Uso Inteligente y Saludable</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <span class="text-xs font-bold text-blue-600 uppercase">Táctica 01</span>
+                        <h4 class="font-bold text-slate-800 mt-1 mb-2">La Regla de los 15 Minutos</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Intenta resolver cualquier problema complejo, escribir un borrador o esbozar un proyecto de forma completamente analógica e independiente durante 15 minutos antes de encender un asistente de Inteligencia Artificial.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <span class="text-xs font-bold text-blue-600 uppercase">Táctica 02</span>
+                        <h4 class="font-bold text-slate-800 mt-1 mb-2">IA en Modo Tutor, No Copiloto</h4>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Estructura tus prompts para que la IA actúe como un mentor socrático. En lugar de pedirle: "Haz un resumen de esta lectura", pídele: "Hazme preguntas para evaluar si comprendí la lectura".
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="prevStep()" class="text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <button onclick="nextStep()" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all flex items-center gap-2">
+                        Siguiente: Bibliografía
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STEP 6: BIBLIOGRAFÍA -->
+        <section id="step-section-6" class="step-transition w-full hidden">
+            <div class="bg-white rounded-3xl p-8 md:p-12 border border-slate-200/80 shadow-lg space-y-6">
+                <div class="flex items-center gap-2 text-blue-600">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-50 px-3 py-1 rounded-full">Fase Final</span>
+                    <span class="text-sm font-semibold">Evidencia Científica y Referencias</span>
+                </div>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-slate-900">Referencias y Bibliografía Científica</h2>
+                <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                    A continuación se detallan las fuentes utilizadas que sirven para fundamentar el modelo metodológico de esta investigación sobre la delegación cognitiva estudiantil:
+                </p>
+
+                <!-- References List -->
+                <div class="space-y-4">
+                    <!-- Ref 1 -->
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150 flex flex-col md:flex-row gap-4 items-start">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0 text-center font-bold text-xs uppercase w-20">
+                            MIT
+                            <span class="block text-[10px] font-normal text-slate-500 mt-1">2024</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm md:text-base">La paradoja de la productividad en la educación basada en agentes generativos</h4>
+                            <p class="text-xs text-slate-500 italic">Massachusetts Institute of Technology (MIT) - Human-AI Collaboration Lab</p>
+                            <p class="text-xs text-slate-600 leading-relaxed mt-2">
+                                Demuestra que los estudiantes que utilizan copilotos de IA completan las tareas un 44% más rápido, pero obtienen un 19% menos de puntuación en exámenes presenciales acumulativos de resolución de problemas lógicos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Ref 2 -->
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150 flex flex-col md:flex-row gap-4 items-start">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0 text-center font-bold text-xs uppercase w-20">
+                            Stanford
+                            <span class="block text-[10px] font-normal text-slate-500 mt-1">2025</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm md:text-base">Desplazamiento cognitivo y el declive en la persistencia de resolución de problemas en adolescentes</h4>
+                            <p class="text-xs text-slate-500 italic">Stanford Graduate School of Education - OpenEd Initiative</p>
+                            <p class="text-xs text-slate-600 leading-relaxed mt-2">
+                                Revela que el uso excesivo de IA reduce la tolerancia a la frustración intelectual. Los estudiantes tienden a abandonar problemas complejos en menos de 3 minutos si no obtienen ayuda digital inmediata.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Ref 3 -->
+                    <div class="p-5 bg-slate-50 rounded-2xl border border-slate-150 flex flex-col md:flex-row gap-4 items-start">
+                        <div class="bg-blue-100 text-blue-600 p-3 rounded-xl flex-shrink-0 text-center font-bold text-xs uppercase w-20">
+                            UNESCO
+                            <span class="block text-[10px] font-normal text-slate-500 mt-1">2023</span>
+                        </div>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-slate-900 text-sm md:text-base">Directrices mundiales para el uso de Inteligencia Artificial Generativa en la educación</h4>
+                            <p class="text-xs text-slate-500 italic">Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura</p>
+                            <p class="text-xs text-slate-600 leading-relaxed mt-2">
+                                Un marco regulatorio global que enfatiza la necesidad de salvaguardar el razonamiento humano autónomo, promoviendo límites estrictos para evitar la atrofia del juicio intelectual.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Message / Interactive Call to Action -->
+                <div class="p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center space-y-3">
+                    <h4 class="font-bold text-slate-900">¡Has completado el estudio de investigación!</h4>
+                    <p class="text-xs text-slate-600">
+                        Comparte estos descubrimientos con tus compañeros de clase y ayúdalos a usar la Inteligencia Artificial de forma inteligente y constructiva.
+                    </p>
+                    <button onclick="goToStep(0)" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all inline-flex items-center gap-1.5 shadow-md shadow-blue-500/10">
+                        Volver a empezar
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17"></path></svg>
+                    </button>
+                </div>
+
+                <div class="pt-6 border-t border-slate-100 flex justify-between items-center">
+                    <button onclick="prevStep()" class="text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <span class="text-xs font-bold text-slate-400">Fin del Documento</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-8 border-t border-slate-900 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <p class="text-[10px] uppercase tracking-wider font-semibold text-slate-500">EduCognición IA • Plataforma de Divulgación e Investigación Científica</p>
+            <p class="text-xs">Estudio diseñado para promover el uso inteligente, sano y responsable de la inteligencia artificial.</p>
+            <p class="text-[10px] text-slate-600">&copy; 2026 Todos los derechos reservados. Evidencias basadas en reportes de la UNESCO, MIT y Stanford.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Javascript Logic -->
+    <script>
+        // Steps Configuration
+        let currentStep = 0;
+        const totalSteps = 7; // Steps from 0 to 6
+
+        // Global variables for Chart and Quiz
+        let academicChartInstance = null;
+        let currentActiveChartId = 1;
+
+        // Simulator Config Data based on Delegation percentage
+        const simulatorData = {
+            0: {
+                status: "Ejercitamiento Cognitivo Pleno: Desarrollo máximo de conexiones neuronales, pensamiento lógico óptimo, alta memoria de largo plazo, pero con tiempos de entrega de tareas sustancialmente lentos.",
+                skill1: 100, skill2: 100, skill3: 95, skill4: 15
+            },
+            25: {
+                status: "Uso Estratégico Moderado: Elevado pensamiento crítico complementado con investigación ágil. Máxima retención, óptimo desempeño diario y eficiencia en niveles altamente competitivos.",
+                skill1: 95, skill2: 90, skill3: 90, skill4: 55
+            },
+            50: {
+                status: "Punto de Equilibrio Máximo: Velocidad de desarrollo acelerada. El aprendizaje es sólido pero se empieza a observar dependencia para redactar correos, planificar horarios y esquemas estructurados básicos.",
+                skill1: 80, skill2: 75, skill3: 85, skill4: 75
+            },
+            75: {
+                status: "Inicio de Desplazamiento Cognitivo: Atrofia progresiva de habilidades críticas. Alta dependencia para sintetizar textos sencillos, pereza mental ante problemas matemáticos y pérdida progresiva de la persistencia intelectual.",
+                skill1: 50, skill2: 40, skill3: 50, skill4: 90
+            },
+            100: {
+                status: "Dependencia Crítica (Saturación Algorítmica): Atrofia severa del criterio intelectual propio. Incapacidad de redactar un párrafo coherente de forma autónoma. Frustración inmediata y parálisis de resolución de problemas cotidianos.",
+                skill1: 10, skill2: 5, skill3: 15, skill4: 100
+            }
+        };
+
+        // Quiz State and Questions
+        const quizQuestions = [
+            {
+                text: "Cuando tienes que escribir un ensayo o tarea académica argumentativa, ¿qué haces primero?",
+                options: [
+                    { text: "Escribo mi propio borrador basándome en lecturas, y uso la IA solo para corrección ortográfica o de estilo final.", score: 0 },
+                    { text: "Pido a la IA que me dé una estructura o bosquejo conceptual, pero yo desarrollo todo el contenido de los párrafos.", score: 5 },
+                    { text: "Le pido directamente a la IA que redacte todo el ensayo basándose en el título de la tarea y luego copio-pego el resultado.", score: 10 }
+                ]
+            },
+            {
+                text: "Si te enfrentas a un problema matemático o lógico de la vida real (como administrar tu presupuesto personal), ¿cómo reaccionas?",
+                options: [
+                    { text: "Hago cálculos de forma manual, en una hoja o Excel usando mi propio criterio matemático.", score: 0 },
+                    { text: "Hago un intento inicial de resolverlo y si me trabo, le consulto a la IA para que me explique detalladamente el procedimiento.", score: 5 },
+                    { text: "Copio y pego las variables directamente en la IA para que me entregue el resultado listo, sin pararme a analizar el proceso.", score: 10 }
+                ]
+            },
+            {
+                text: "¿Qué ocurre cuando tienes que leer un artículo de más de 10 páginas para clase?",
+                options: [
+                    { text: "Lo leo completo en papel o pantalla, destacando ideas principales por mi cuenta de forma analógica.", score: 0 },
+                    { text: "Leo el artículo de forma superficial y uso la IA únicamente para aclarar conceptos muy complejos o términos raros.", score: 5 },
+                    { text: "Subo el PDF a la IA y le pido 'Dame un resumen de 3 párrafos de este texto' para basarme únicamente en ello sin leer el original.", score: 10 }
+                ]
+            },
+            {
+                text: "Durante clases presenciales o exámenes escritos donde no se permiten dispositivos móviles:",
+                options: [
+                    { text: "Me siento seguro, recuerdo la información y desarrollo los problemas lógicos sin mayor estrés.", score: 0 },
+                    { text: "Siento cierta inseguridad inicial o dudo de mis propios análisis, pero logro estructurar las respuestas adecuadamente.", score: 5 },
+                    { text: "Siento un alto nivel de ansiedad (cortisol elevado), parálisis mental y dificultad crítica para hilvanar ideas de forma coherente.", score: 10 }
+                ]
+            },
+            {
+                text: "Si no tienes acceso a internet durante 48 horas debido a un corte imprevisto de energía:",
+                options: [
+                    { text: "No afecta mi capacidad intelectual para estructurar mis planes cotidianos, resolver pendientes o leer.", score: 0 },
+                    { text: "Me cuesta un poco más organizarme, pero logro adaptarme con recursos analógicos disponibles.", score: 5 },
+                    { text: "Me siento bloqueado mentalmente e incapaz de realizar mis deberes o estudiar porque dependo al 100% de la red de IA.", score: 10 }
+                ]
+            }
+        ];
+
+        let quizCurrentIndex = 0;
+        let quizCumulativeScore = 0;
+
+        // Initialize App
+        window.onload = function() {
+            // Setup step UI initially
+            goToStep(0);
+            
+            // Load simulator defaults
+            updateSimulator(50);
+
+            // Load Quiz Questions
+            loadQuizQuestion();
+        };
+
+        // Navigation Engine
+        function goToStep(stepIndex) {
+            // Guard values
+            if (stepIndex < 0 || stepIndex >= totalSteps) return;
+            
+            // Hide previous section, show current one
+            document.getElementById(`step-section-${currentStep}`).classList.add('hidden');
+            document.getElementById(`step-section-${stepIndex}`).classList.remove('hidden');
+
+            currentStep = stepIndex;
+
+            // Scroll cleanly to the top of the viewport
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update Progress bar width
+            const progressPercent = ((stepIndex + 1) / totalSteps) * 100;
+            document.getElementById('topProgressBar').style.width = progressPercent + '%';
+
+            // Update progress text badge
+            document.getElementById('currentStepBadge').innerText = `${stepIndex + 1}/${totalSteps}`;
+
+            // Update step header navigation dots highlight
+            for (let i = 0; i < totalSteps; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) {
+                    if (i === stepIndex) {
+                        dot.className = "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-blue-600 text-white shadow-sm transition-all";
+                    } else if (i < stepIndex) {
+                        dot.className = "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold bg-blue-100 text-blue-700 border border-blue-200 transition-all hover:bg-blue-200";
+                    } else {
+                        dot.className = "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 transition-all hover:bg-slate-200";
+                    }
+                }
+            }
+
+            // Special trigger: Render / reset Chart.js when entering the Data step (Step 3)
+            if (stepIndex === 3) {
+                // Short timeout to guarantee elements are rendered in DOM and visible for correct canvas calculation
+                setTimeout(() => {
+                    if (currentActiveChartId === 1) {
+                        renderChart1();
+                    } else {
+                        renderChart2();
+                    }
+                }, 100);
+            }
+        }
+
+        function nextStep() {
+            goToStep(currentStep + 1);
+        }
+
+        function prevStep() {
+            goToStep(currentStep - 1);
+        }
+
+        // Chart switching functions
+        function switchChart(chartId) {
+            if (chartId === currentActiveChartId) return;
+            currentActiveChartId = chartId;
+
+            const t1 = document.getElementById('tabChart1');
+            const t2 = document.getElementById('tabChart2');
+
+            if (chartId === 1) {
+                t1.className = "px-4 py-2 text-xs font-semibold border-b-2 border-blue-600 text-blue-600 whitespace-nowrap focus:outline-none transition-all";
+                t2.className = "px-4 py-2 text-xs font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap focus:outline-none transition-all";
+                renderChart1();
+            } else {
+                t2.className = "px-4 py-2 text-xs font-semibold border-b-2 border-blue-600 text-blue-600 whitespace-nowrap focus:outline-none transition-all";
+                t1.className = "px-4 py-2 text-xs font-semibold border-b-2 border-transparent text-slate-500 hover:text-slate-800 whitespace-nowrap focus:outline-none transition-all";
+                renderChart2();
+            }
+        }
+
+        function renderChart1() {
+            if (academicChartInstance) academicChartInstance.destroy();
+
+            const ctx = document.getElementById('academicChart').getContext('2d');
+            academicChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Comprensión Lectora', 'Persistencia al Fallar', 'Memoria Contextual', 'Análisis de Datos', 'Juicio Autónomo'],
+                    datasets: [
+                        {
+                            label: 'Estudiantes sin IA en tareas diarias',
+                            data: [88, 82, 85, 75, 90],
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 6
+                        },
+                        {
+                            label: 'Estudiantes dependientes de IA diariamente',
+                            data: [52, 41, 58, 70, 55],
+                            backgroundColor: '#ef4444',
+                            borderRadius: 6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Eficiencia (%) en Pruebas Presenciales'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 15,
+                                font: { size: 11 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderChart2() {
+            if (academicChartInstance) academicChartInstance.destroy();
+
+            const ctx = document.getElementById('academicChart').getContext('2d');
+            academicChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Semana 1', 'Semana 4', 'Semana 8', 'Semana 12', 'Semana 16'],
+                    datasets: [{
+                        label: 'Consultas diarias promedio de IA',
+                        data: [12, 34, 58, 76, 92],
+                        borderColor: '#1d4ed8',
+                        backgroundColor: 'rgba(29, 78, 216, 0.05)',
+                        fill: true,
+                        tension: 0.3
+                    }, {
+                        label: 'Horas semanales de estudio autónomo',
+                        data: [15, 12, 8, 5, 3],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.05)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Métricas de Comportamiento Escolar'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 15,
+                                font: { size: 11 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Simulator Interaction Logic
+        function updateSimulator(value) {
+            const roundedVal = Math.round(value / 25) * 25;
+            const data = simulatorData[roundedVal];
+            
+            // Update Percentage Text
+            document.getElementById('simulatorPercentage').innerText = value + '%';
+            document.getElementById('simulatorStatus').innerText = data.status;
+
+            // Update Progress bars & Stat numbers
+            const updateBar = (id, statId, val) => {
+                const bar = document.getElementById(id);
+                const stat = document.getElementById(statId);
+                bar.style.width = val + '%';
+                stat.innerText = val + '%';
+            };
+
+            updateBar('barSkill1', 'statSkill1', data.skill1);
+            updateBar('barSkill2', 'statSkill2', data.skill2);
+            updateBar('barSkill3', 'statSkill3', data.skill3);
+            updateBar('barSkill4', 'statSkill4', data.skill4);
+        }
+
+        // Quiz Logic
+        function loadQuizQuestion() {
+            const question = quizQuestions[quizCurrentIndex];
+            document.getElementById('questionCounter').innerText = `PREGUNTA ${quizCurrentIndex + 1} DE 5`;
+            
+            const progressPct = ((quizCurrentIndex) / 5) * 100;
+            document.getElementById('quizProgressBar').innerText = `${progressPct}% COMPLETADO`;
+
+            document.getElementById('quizQuestionText').innerText = question.text;
+
+            const optionsContainer = document.getElementById('quizAnswersOptions');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-blue-500 hover:bg-blue-50/50 transition-all text-sm font-medium text-slate-700 flex items-center gap-3";
+                btn.onclick = () => selectQuizOption(opt.score);
+                
+                const bullet = document.createElement('span');
+                bullet.className = "w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-500 border border-slate-200 flex-shrink-0";
+                bullet.innerText = String.fromCharCode(65 + idx); // A, B, C
+
+                const textSpan = document.createElement('span');
+                textSpan.innerText = opt.text;
+
+                btn.appendChild(bullet);
+                btn.appendChild(textSpan);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectQuizOption(score) {
+            quizCumulativeScore += score;
+            quizCurrentIndex++;
+
+            if (quizCurrentIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quizQuestionBox').classList.add('hidden');
+            document.getElementById('quizResultBox').classList.remove('hidden');
+
+            const profileName = document.getElementById('quizProfileName');
+            const profileDesc = document.getElementById('quizProfileDesc');
+
+            if (quizCumulativeScore <= 15) {
+                profileName.innerText = "Usuario Autónomo y Crítico";
+                profileName.className = "text-xl font-extrabold text-emerald-600";
+                profileDesc.innerText = "Excelente equilibrio cognitivo. Dominas tus destrezas investigativas y cognitivas. Utilizas la tecnología únicamente como apoyo o para verificar, preservando tu potencial biológico natural para redactar, analizar y resolver contingencias en la vida real de forma totalmente independiente.";
+            } else if (quizCumulativeScore <= 35) {
+                profileName.innerText = "Usuario Moderado / Semidependiente";
+                profileName.className = "text-xl font-extrabold text-amber-600";
+                profileDesc.innerText = "Tienes un uso moderadamente constructivo, pero se registran señales de desplazamiento mental leve. Te cuesta esfuerzo inicial planificar tus escritos y recurres ocasionalmente a la IA por pereza de redactar o calcular de forma directa. Se aconseja regular la frecuencia de uso para mantener tus capacidades al máximo.";
+            } else {
+                profileName.innerText = "Dependencia Crítica de la IA";
+                profileName.className = "text-xl font-extrabold text-red-600";
+                profileDesc.innerText = "Nivel preocupante de dependencia cognitiva. Delegas la mayor parte de tu esfuerzo analítico a algoritmos. Es muy factible que sufras ansiedad intelectual en exámenes escritos tradicionales y parálisis mental al resolver situaciones de la vida diaria de forma independiente. ¡Sigue urgentemente el Decálogo de Mitigación!";
+            }
+        }
+
+        function resetQuiz() {
+            quizCurrentIndex = 0;
+            quizCumulativeScore = 0;
+            document.getElementById('quizQuestionBox').classList.remove('hidden');
+            document.getElementById('quizResultBox').classList.add('hidden');
+            loadQuizQuestion();
+        }
+    </script>
+</body>
+</html>
